@@ -144,7 +144,6 @@
     <ClCompile Include="CTcpClient.cpp" />
     <ClCompile Include="CUdpClient.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="OperateResult.cpp" />
     <ClCompile Include="SimensCNCS7Driver.cpp" />
     <ClCompile Include="SocketClient.cpp" />
   </ItemGroup>
@@ -157,6 +156,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="OperateResult.h" />
+    <ClInclude Include="PollTag.h" />
     <ClInclude Include="SimensCNCS7Driver.h" />
     <ClInclude Include="SocketClient.h" />
   </ItemGroup>

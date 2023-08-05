@@ -7,8 +7,11 @@
 #include <vector>
 #include <chrono>
 #include <thread>
+#include<iomanip>
+#include"Analysis.h"
 #include"SocketClient.h"
 #include"OperateResult.h"
+#include"PollTag.h"
 class SimensCNCS7Driver
 {
 public:
@@ -22,7 +25,7 @@ public:
 
     bool Connect();
     
-    void ReadItem();
+    void ReadItem(PollTag polltag);
     //
     //ValueTake<OperateResult>ReadItem(pollTag);
 
@@ -32,6 +35,7 @@ private:
     int port = 8001;
     Model _model;
     ETH_S7SimensCommands _eth_S7SimensCommands;
+    Analysis _analysis;
     void HandShake();
     string send(string cmd ,string analysis);
     string getPos(int num, string address);

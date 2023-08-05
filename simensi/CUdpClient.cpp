@@ -126,7 +126,8 @@ string CUdpClient::RecvMsg()
 {
     if (!m_socket)
     {
-        return false;
+        cout << "couldn't find the socket\n";
+        return NULL;
     }
     const int iBufSize = 4096;
     char recvBuf[iBufSize] = { 0, };
@@ -144,33 +145,31 @@ string CUdpClient::RecvMsg()
     }
 }
 
-vector<byte> CUdpClient::RecvByte()
+byte* CUdpClient::RecvByte()
 {
-    vector<byte> recvByte;
+    byte recvByte[2048] = {0,};
 
     if (!m_socket)
     {
-        recvByte.clear();
         cout << "UDP: The Socket is NULL\n";
-        return recvByte;
+        return NULL;
     }
     const int iBufSize = 2048;
     char recvBuf[iBufSize] = { 0, };
     auto iRecvSize = recv(m_socket, recvBuf, iBufSize, 0);
     for (int i = 0; i < 2048; i++)
     {
-        recvByte.push_back(recvBuf[i]);
+        recvByte[i]=(byte)recvBuf[i];
     }
-
+    return recvByte;
     if (iRecvSize > 0)
     {
         cout << "UDP: Receive succeeded!\n";
-        return recvByte;
+        return NULL;
     }
     else
     {
-        recvByte.clear();
         cout << "UDP: Receive failed!\n";
-        return recvByte;
+        return NULL;
     }
 }

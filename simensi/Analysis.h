@@ -4,6 +4,12 @@
 #include <vector>
 
 using namespace std;
+class Analysis
+{
+public:
+    Analysis();
+    ~Analysis();
+
 /// <summary>
 /// 操作模式
 /// </summary>
@@ -20,7 +26,6 @@ enum SimensMode
     INC,//增量进给
     OTHER//未知
 };
-
 /// <summary>
 /// 运行状态
 /// </summary>
@@ -33,14 +38,13 @@ enum SimensStatus
     SPENDLE_CW_CCW = 4,//主轴正反转
     OTHER = 5
 };
-
 /// <summary>
 /// 解析操作模式
 /// </summary>
 /// <param name="datas"></param>
 /// <param name="len"></param>
 /// <returns></returns>
-int AnalusisModeData(byte * datas)
+int AnalysisModeData(byte * datas)
 {
     if (datas[24] == 0x02)
     {
@@ -77,13 +81,12 @@ int AnalusisModeData(byte * datas)
         return (int)SimensMode::OTHER;
     }
 }
-
 /// <summary>
 /// 解析运行状态
 /// </summary>
 /// <param name="datas"></param>
 /// <returns></returns>
-int AnalusisStatusData(byte* datas) 
+int AnalysisStatusData(byte* datas) 
 {
     if (datas[24] == 0x02)
     {
@@ -103,17 +106,15 @@ int AnalusisStatusData(byte* datas)
         return ((int)SimensStatus::OTHER);
     }
 }
-
 float  AnalysisFloatData(byte* datas)
 {
     auto value = *reinterpret_cast<float*>(datas[25]);
     std::reverse(reinterpret_cast<char*>(&value), reinterpret_cast<char*>(&value) + sizeof(float));
     return value;
 }
-
 double AnalysisDoubleData(byte* datas)
 {
-    auto value = NULL;
+    double value = NULL;
     if (datas[3] == 33)
     {
         value = *reinterpret_cast<double*>(datas[25]);
@@ -127,7 +128,6 @@ double AnalysisDoubleData(byte* datas)
 
     return value;
 }
-
 int AnalysisInt32Data(vector<unsigned char> datas)
 {
     string ss;
@@ -144,7 +144,6 @@ int AnalysisInt32Data(vector<unsigned char> datas)
 
     return value;
 }
-
 string AnalysisStrData(vector<unsigned char> datas)
 {
     string ss;
@@ -156,11 +155,57 @@ string AnalysisStrData(vector<unsigned char> datas)
     ss.erase(remove(ss.begin(), ss.end(), '\0'), ss.end());
     string value = (datas[25] << 8) | datas[26];
     return value;
-
 }
-
 int AnalysisAlarm(byte* datas) 
 {
     auto s = datas;
 }
 
+auto getMethod(string analysis,byte* datas) 
+{
+    if (analysis == "AnalysisAlarm")
+    {
+        return AnalysisAlarm(datas);
+    }
+    else if (analysis == "AnalysisStrData")
+    {
+        return AnalysisStrData(datas);
+    }
+    else if (analysis == "AnalysisInt32Data")
+    {
+        return AnalysisInt32Data(datas);
+    }
+    else if (analysis == "AnalysisDoubleData")
+    {
+        return AnalysisDoubleData(datas);
+    }
+    else if (analysis =="AnalysisFloatData")
+    {
+        return AnalysisFloatData(datas);
+    }
+    else if (analysis == "AnalysisStatusData")
+    {
+        return AnalysisStatusData(datas);
+    }
+    else if (analysis == "AnalysisModeData")
+    {
+        return AnalysisModeData(datas);
+    }
+    else
+    {
+        cout << "Error: Can't find the method you want!\n";
+        return NULL;
+    }
+}
+
+private:
+
+};
+
+Analysis::Analysis()
+{
+}
+
+Analysis::~Analysis()
+{
+}

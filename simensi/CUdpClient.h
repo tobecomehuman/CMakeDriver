@@ -18,7 +18,7 @@ public:
     bool SendMsg(const string& strMsg);
 
     string RecvMsg(); 
-    vector<byte> RecvByte();
+    byte* RecvByte();
 private:
     SOCKET m_socket = INVALID_SOCKET;
     string m_strServerIp;//Server IP listener

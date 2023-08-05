@@ -92,7 +92,7 @@ string SocketClient::RecvMsg()
     }
 }
 
-vector<byte> SocketClient::RecvByte()
+byte* SocketClient::RecvByte()
 {
     if (!_isUDP)
     {

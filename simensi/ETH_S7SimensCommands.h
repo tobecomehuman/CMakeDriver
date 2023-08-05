@@ -1,5 +1,6 @@
 #pragma once
 #include<stdlib.h>
+#include<iostream>
 #include <cstddef>
 //#include"Number.h"
 using namespace std;
@@ -64,6 +65,193 @@ public:
     static  byte CNC_READ_R[];
     static  byte CNC_WRITE_R[];
     static  byte R_Driver[];
+
+    byte* getCommands(string cmdName)
+    {
+        if (cmdName == "FIRST_HAND_SHAKE")
+        {
+            return FIRST_HAND_SHAKE;
+        }
+        else if (cmdName == "SECOND_HAND_SHAKE")
+        {
+            return SECOND_HAND_SHAKE;
+        }
+        else if (cmdName == "THIRD_HAND_SHAKE")
+        {
+            return THIRD_HAND_SHAKE;
+        }
+        else if (cmdName == "CNC_ID") {
+            return CNC_ID;
+
+        }
+        else if (cmdName == "CNC_TYPE") {
+            return CNC_TYPE;
+        }
+        else if (cmdName == "READ_VAR_INFO") {
+            return READ_VAR_INFO;
+        }
+        else if (cmdName == "MANUFACTURE_DATE")
+        {
+            return MANUFACTURE_DATE;
+        }
+        else if (cmdName == "CNC_MODE") {
+            return CNC_MODE;
+        }
+        else if (cmdName == "CNC_STATUS") {
+            return CNC_STATUS;
+        }
+        else if (cmdName == "CNC_PRODUCTS") {
+            return CNC_PRODUCTS;
+
+        }
+        else if (cmdName == "CNC_SET_PRODUCTS") {
+
+            return CNC_SET_PRODUCTS;
+        }
+        else if (cmdName == "CNC_FEEDSETSPEED") {
+            return CNC_FEEDSETSPEED;
+        }
+        else if (cmdName == "CNC_FEEDACTSPEED") {
+            return CNC_FEEDACTSPEED;
+        }
+        else if (cmdName == "CNC_FEEDRATE") {
+            return CNC_FEEDRATE;
+        }
+        else if (cmdName == "CNC_SPINDLESETSPEED") {
+            return CNC_SPINDLESETSPEED;
+        }
+        else if (cmdName == "CNC_SPINDLEACTSPEED") {
+            return CNC_SPINDLEACTSPEED;
+        }
+        else if (cmdName == "CNC_SPINDRATE") {
+            return CNC_SPINDRATE;
+        }
+        else if (cmdName == "RUN_TIME") {
+            return RUN_TIME;
+        }
+        else if (cmdName == "REMAIN_TIME") {
+            return REMAIN_TIME;
+        }
+        else if (cmdName == "PROGRAM_NAME") {
+            return PROGRAM_NAME;
+        }
+        else if (cmdName == "PROGRAM_CONTENT") {
+            return PROGRAM_CONTENT;
+        }
+        else if (cmdName == "TOOL_NUMBER") {
+            return TOOL_NUMBER;
+
+        }
+        else if (cmdName == "TOOL_D_NUMBER") {
+            return TOOL_D_NUMBER;
+
+        }
+        else if (cmdName == "TOOL_H_NUMBER") {
+            return TOOL_H_NUMBER;
+
+        }
+        else if (cmdName == "TOOL_X_LENGTH") {
+            return TOOL_X_LENGTH;
+
+        }
+        else if (cmdName == "TOOL_Z_LENGTH") {
+            return TOOL_Z_LENGTH;
+
+        }
+        else if (cmdName == "TOOL_RADIU") {
+            return TOOL_RADIU;
+
+        }
+        else if (cmdName == "TOOL_EDG") {
+            return TOOL_EDG;
+
+        }
+        else if (cmdName == "posflag") {
+            return posflag;
+
+        }
+        else if (cmdName == "MACHINE_POS") {
+            return MACHINE_POS;
+
+        }
+        else if (cmdName == "RELATIVELY_POS") {
+            return RELATIVELY_POS;
+
+        }
+        else if (cmdName == "REMAIN_POS") {
+            return REMAIN_POS;
+
+        }
+        else if (cmdName == "AXIS_NAME") {
+            return AXIS_NAME;
+
+        }
+        else if (cmdName == "DRIVE_VOLTAGE") {
+            return DRIVE_VOLTAGE;
+
+        }
+        else if (cmdName == "DRIVER_CURRENT") {
+            return DRIVER_CURRENT;
+
+        }
+        else if (cmdName == "CNC_SPLOAD") {
+            return CNC_SPLOAD;
+
+        }
+        else if (cmdName == "DRIVER_LOAD1") {
+            return DRIVER_LOAD1;
+
+        }
+        else if (cmdName == "DRIVER_LOAD2") {
+            return DRIVER_LOAD2;
+
+        }
+        else if (cmdName == "DRIVER_LOAD3") {
+            return DRIVER_LOAD3;
+
+        }
+        else if (cmdName == "DRIVER_LOAD4") {
+            return DRIVER_LOAD4;
+
+        }
+        else if (cmdName == "DRIVER_TEMPER") {
+            return DRIVER_TEMPER;
+
+        }
+        else if (cmdName == "CNC_SPMotorTemperature") {
+            return CNC_SPMotorTemperature;
+
+        }
+        else if (cmdName == "CNC_ALARM_NUM") {
+            return CNC_ALARM_NUM;
+
+        }
+        else if (cmdName == "CNC_Alarm") {
+            return CNC_Alarm;
+
+        }
+        else if (cmdName == "CNC_T_WORK_SYSTEM") {
+            return CNC_T_WORK_SYSTEM;
+
+        }
+        else if (cmdName == "CNC_M_WORK_SYSTEM") {
+            return CNC_M_WORK_SYSTEM;
+        }
+        else if (cmdName == "CNC_READ_R") {
+            return CNC_READ_R;
+        }
+        else if (cmdName == "CNC_WRITE_R") {
+            return CNC_WRITE_R;
+        }
+        else if (cmdName == "R_Driver") {
+            return R_Driver;
+        }
+        else
+         { cout << "Error!!! Didnt find the Command you want.\n";
+        return NULL;
+        }
+    }
+
 
     ETH_S7SimensCommands() {
         static  byte FIRST_HAND_SHAKE[] = { 0x03, 0x00, 0x00, 0x16,0x11, 0xe0, 0x00, 0x00, 0x00, 0x48, 0x00, 0xc1, 0x02, 0x04, 0x00, 0xc2, 0x02, 0x0d, 0x04, 0xc0, 0x01, 0x0a };
@@ -223,7 +411,7 @@ public:
           0x04,
           0x01,
           0x12,0x08,0x82,0x41,0x00,0x09,0x00,0x01,0x3b,0x01,
-          0x03, 0x00, 0x00, 0x07, 0x02, 0xf0, 0x00 
+          0x03, 0x00, 0x00, 0x07, 0x02, 0xf0, 0x00
         };
         //剩余时间
         static  byte REMAIN_TIME[] = { 0x03, 0x00, 0x00, 0x1d,    //12+17=29
@@ -513,7 +701,7 @@ public:
              0x03, 0x00, 0x00, 0x07, 0x02, 0xf0, 0x00
         };//报警个数
 
-     /// <summary>
+        /// <summary>
      /// 报警信息
      /// </summary>
         static  byte CNC_ALARM[] = { 0x03,0x00,0x00,

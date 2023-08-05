@@ -147,34 +147,63 @@ string CTcpClient::RecvMsg()
     }
 }
 
-vector<byte> CTcpClient::RecvByte()
+byte* CTcpClient::RecvByte()
 {
-
-    vector<byte> recvByte;
-
-    if (!m_socket)
-    {
-        recvByte.clear();
-        cout << "TCP: The Socket is NULL\n";
-        return recvByte ;
-    }
-    const int iBufSize = 2048;
-    char recvBuf[iBufSize] = { 0, };
-    auto iRecvSize = recv(m_socket, recvBuf, iBufSize, 0);
-    for (int i = 0; i < 2048; i++) 
-    {
-        recvByte.push_back(recvBuf[i]);
-    }
-
-    if (iRecvSize > 0)
-    {
-        cout << "TCP: Receive succeeded!\n";
-        return recvByte;
-    }
-    else
-    {
-        recvByte.clear();
-        cout << "TCP: Receive failed!\n";
-        return recvByte;
-    }
+    byte result[2048] = { 0, };
+        if (!m_socket)
+        {
+            cout << "TCP: The Socket is NULL\n";
+            return NULL ;
+        }
+        const int iBufSize = 2048;
+        char recvBuf[iBufSize] = { 0, };
+        auto iRecvSize = recv(m_socket, recvBuf, iBufSize, 0);
+        for (int i = 0; i < 2048; i++) 
+        {
+            //recvByte.push_back(recvBuf[i]);
+            result[i] = (byte)recvBuf[i];
+        }
+        if (iRecvSize > 0)
+        {
+            cout << "TCP: Receive succeeded!\n";
+            return NULL;
+        }
+        else
+        {
+            cout << "TCP: Receive failed!\n";
+            return NULL;
+        }
+        return result;
 }
+
+//vector<byte> CTcpClient::RecvByte()
+//{
+//
+//    vector<byte> recvByte;
+//
+//    if (!m_socket)
+//    {
+//        recvByte.clear();
+//        cout << "TCP: The Socket is NULL\n";
+//        return recvByte ;
+//    }
+//    const int iBufSize = 2048;
+//    char recvBuf[iBufSize] = { 0, };
+//    auto iRecvSize = recv(m_socket, recvBuf, iBufSize, 0);
+//    for (int i = 0; i < 2048; i++) 
+//    {
+//        recvByte.push_back(recvBuf[i]);
+//    }
+//
+//    if (iRecvSize > 0)
+//    {
+//        cout << "TCP: Receive succeeded!\n";
+//        return recvByte;
+//    }
+//    else
+//    {
+//        recvByte.clear();
+//        cout << "TCP: Receive failed!\n";
+//        return recvByte;
+//    }
+//}

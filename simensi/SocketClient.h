@@ -21,7 +21,7 @@ public:
 
     bool isConnected=false;
     string RecvMsg();
-    vector<byte> RecvByte();
+    byte* RecvByte();
 private:
 
     string _ip;

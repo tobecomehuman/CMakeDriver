@@ -18,7 +18,8 @@ public:
     bool SendByte(const byte* datas);
 
     string RecvMsg();
-    vector<byte> RecvByte();
+    byte* RecvByte();
+   // vector<byte> RecvByte();
 
     bool m_isConnected = false;
 private:
