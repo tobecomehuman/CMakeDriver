@@ -1,6 +1,4 @@
 #include<iostream>
-#include"Analysis.h"
-#include <string.h>
 #include <string>
 #include<cstdlib>
 

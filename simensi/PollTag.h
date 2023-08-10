@@ -10,7 +10,6 @@ public:
     string old_value;
     string raw_value;
     string Value;
-    [JsonIgnore]
     string errorMessage;
 //    [DisplayName("点位类型")]
     int tagType;

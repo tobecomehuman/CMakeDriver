@@ -1,9 +1,8 @@
 #pragma once
 #include <ostream>
 #include <cstddef>
-#include "ETH_S7SimensCommands.h"
-#include "Analysis.h"
-#include "CommandAttribute.h"
+
+
 
 #define Command(name, command, analysis) 
 std::string name;

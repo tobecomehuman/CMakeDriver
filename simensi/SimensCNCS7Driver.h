@@ -1,4 +1,5 @@
 #pragma once
+#include<memory>
 #include<string>
 #include <cstddef>
 #include"ETH_S7SimensCommands.h"
@@ -10,7 +11,6 @@
 #include<iomanip>
 #include"Analysis.h"
 #include"SocketClient.h"
-#include"OperateResult.h"
 #include"PollTag.h"
 class SimensCNCS7Driver
 {
@@ -25,7 +25,7 @@ public:
 
     bool Connect();
     
-    void ReadItem(PollTag polltag);
+    string ReadItem(PollTag polltag);
     //
     //ValueTake<OperateResult>ReadItem(pollTag);
 
@@ -37,7 +37,7 @@ private:
     ETH_S7SimensCommands _eth_S7SimensCommands;
     Analysis _analysis;
     void HandShake();
-    string send(string cmd ,string analysis);
+    string send(byte* cmd ,string analysis);
     string getPos(int num, string address);
 
 };

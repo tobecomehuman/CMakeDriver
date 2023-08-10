@@ -146,6 +146,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SimensCNCS7Driver.cpp" />
     <ClCompile Include="SocketClient.cpp" />
+    <ClCompile Include="ETH_S7SimensCommands.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Analysis.h" />

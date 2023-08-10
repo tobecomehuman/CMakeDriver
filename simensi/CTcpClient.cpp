@@ -129,7 +129,7 @@ string CTcpClient::RecvMsg()
 {
     if (!m_socket)
     {
-        return false;
+        return NULL;
     }
     const int iBufSize = 4096;
     char recvBuf[iBufSize] = { 0, };

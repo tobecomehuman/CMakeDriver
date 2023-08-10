@@ -1,9 +1,14 @@
 #pragma once
+#include<memory>
 #include<cstddef>
 #include"Number.h"
 #include <vector>
-
+#include<variant>
+#include<any>
 using namespace std;
+//typedef std::any ReturnType;
+//typedef variant<int, double,string> ReturnType;
+
 class Analysis
 {
 public:
@@ -24,7 +29,7 @@ enum SimensMode
     REFPOINT,//返回参考点
     VAR,//以可变增量运行
     INC,//增量进给
-    OTHER//未知
+    Mode_OTHER//未知
 };
 /// <summary>
 /// 运行状态
@@ -36,7 +41,7 @@ enum SimensStatus
     HOLD = 2,//进给保持
     START = 3,//程序运行 
     SPENDLE_CW_CCW = 4,//主轴正反转
-    OTHER = 5
+    Satus_OTHER = 5
 };
 /// <summary>
 /// 解析操作模式
@@ -64,7 +69,7 @@ int AnalysisModeData(byte * datas)
             }
             else
             {
-                return (int)SimensMode::OTHER;
+                return (int)SimensMode::Mode_OTHER;
             }
         }
         else if (datas[31] == 0x03)
@@ -73,12 +78,12 @@ int AnalysisModeData(byte * datas)
         }
         else
         {
-            return (int)SimensMode::OTHER;
+            return (int)SimensMode::Mode_OTHER;
         }
     }
     else
     {
-        return (int)SimensMode::OTHER;
+        return (int)SimensMode::Mode_OTHER;
     }
 }
 /// <summary>
@@ -99,13 +104,14 @@ int AnalysisStatusData(byte* datas)
         else if ((datas[25] == 0x01) && (datas[31] == 0x05))
             return ((int)SimensStatus::SPENDLE_CW_CCW);
         else
-            return ((int)SimensStatus::OTHER);
+            return ((int)SimensStatus::Satus_OTHER);
     }
     else 
     {
-        return ((int)SimensStatus::OTHER);
+        return ((int)SimensStatus::Satus_OTHER);
     }
 }
+
 float  AnalysisFloatData(byte* datas)
 {
     auto value = *reinterpret_cast<float*>(datas[25]);
@@ -128,75 +134,47 @@ double AnalysisDoubleData(byte* datas)
 
     return value;
 }
-int AnalysisInt32Data(vector<unsigned char> datas)
+short AnalysisInt32Data(byte* datas)
 {
-    string ss;
-    for (unsigned char c : datas)
-    {
-        ss += to_string(c) + "-";
-    }
-    ss = ss.substr(0, ss.size() - 1);
-
-    string s(reinterpret_cast<char*>(datas.data() + 25));
-    s.erase(remove(s.begin(), s.end(), '\0'), s.end());
-
-    int value = (datas[25] << 8) | datas[26];
-
+    string ss(datas+25, datas+27);
+    short value = *reinterpret_cast<short*>(&ss);
     return value;
+
+//        std::vector<char> datas = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+//        short value = *reinterpret_cast<short*>(&datas[25]);
+
+
+
+    ///*string ss(datas, datas + sizeof(datas));
+    //ss = ss.substr(0, ss.size() - 1);
+    //auto value = *reinterpret_cast<int*>(datas[25]);
+    //
+    //string s(reinterpret_cast<char*>(&ss);
+    //s.erase(remove(s.begin(), s.end(), '\0'), s.end());
+
+    //int value = (datas[25] << 8) | datas[26];*/
 }
-string AnalysisStrData(vector<unsigned char> datas)
+string AnalysisStrData(byte* datas)
 {
-    string ss;
-    for (unsigned char c : datas)
-    {
-        ss += to_string(c) + "-";
-    }
-    ss = ss.substr(0, ss.size() - 1);
-    ss.erase(remove(ss.begin(), ss.end(), '\0'), ss.end());
-    string value = (datas[25] << 8) | datas[26];
+    string value(datas+25, datas + sizeof(datas));
     return value;
+
+    //string ss(datas, datas + sizeof(datas));
+    //ss = ss.substr(0, ss.size() - 1);
+    //auto value = "";
+    ///*ss.erase(remove(ss.begin(), ss.end(), '\0'), ss.end());
+    //string value = (datas[25] << 8) | datas[26];*/
+    //return value;
 }
 int AnalysisAlarm(byte* datas) 
 {
-    auto s = datas;
+    string ss(datas + 25, datas + 29);
+    int value  = *reinterpret_cast<int*>(&ss);
+    //value = *reinterpret_cast<double*>(datas[25]);
+    //std::reverse(reinterpret_cast<char*>(&value), reinterpret_cast<char*>(&value) + sizeof(double));
+    return value;
 }
 
-auto getMethod(string analysis,byte* datas) 
-{
-    if (analysis == "AnalysisAlarm")
-    {
-        return AnalysisAlarm(datas);
-    }
-    else if (analysis == "AnalysisStrData")
-    {
-        return AnalysisStrData(datas);
-    }
-    else if (analysis == "AnalysisInt32Data")
-    {
-        return AnalysisInt32Data(datas);
-    }
-    else if (analysis == "AnalysisDoubleData")
-    {
-        return AnalysisDoubleData(datas);
-    }
-    else if (analysis =="AnalysisFloatData")
-    {
-        return AnalysisFloatData(datas);
-    }
-    else if (analysis == "AnalysisStatusData")
-    {
-        return AnalysisStatusData(datas);
-    }
-    else if (analysis == "AnalysisModeData")
-    {
-        return AnalysisModeData(datas);
-    }
-    else
-    {
-        cout << "Error: Can't find the method you want!\n";
-        return NULL;
-    }
-}
 
 private:
 
