@@ -16,10 +16,11 @@ class SimensCNCS7Driver
 {
 public:
     SimensCNCS7Driver();
+    SimensCNCS7Driver(const char* config);
     ~SimensCNCS7Driver();
      string DriverName= "MIOT.SimensCNCS7.Driver";
 
-     void init();
+    // void init(const char* config);
     //OperateResult Connect();
     void DisConnect();
 

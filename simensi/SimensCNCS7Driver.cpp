@@ -1,11 +1,19 @@
 #include"SimensCNCS7Driver.h"
 #include"rapidjson/encodings.h"
 #include"rapidjson/rapidjson.h"
+#include"rapidjson/document.h"
 using namespace rapidjson;
 using namespace std;
-SimensCNCS7Driver::SimensCNCS7Driver()
+SimensCNCS7Driver::SimensCNCS7Driver(const char* config)
 {
-    init();
+    Document parse_config;
+    parse_config.Parse(config);
+    ip = parse_config["ip"].GetString();
+    port = parse_config["port"].GetInt();
+    _client = SocketClient(ip, port);
+    _model = Model();
+    _eth_S7SimensCommands = ETH_S7SimensCommands();
+    
 }
 
 SimensCNCS7Driver::~SimensCNCS7Driver()
@@ -115,13 +123,7 @@ string SimensCNCS7Driver::ReadItem(PollTag polltag)
     }
 }
 
-void SimensCNCS7Driver::init()
-{
 
-    _client=SocketClient(ip,port);
-    _model = Model();
-    _eth_S7SimensCommands = ETH_S7SimensCommands();
-}
 
 void SimensCNCS7Driver::DisConnect()
 {
